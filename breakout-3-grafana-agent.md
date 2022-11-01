@@ -187,8 +187,19 @@ C. At the bottom, choose the logs and metrics data sources for your stack.
 
 ![import3](images/image32.png)
 
-D. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
-
+D. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. You'll find there are errors, but no successful order.
 ![import4](images/image33.png)
+
+## VI. Redeploy the Application
+
+Because there are errors, we're going to correct this and get some successful orders instead.
+
+In the webshell, run:
+```bash
+kubectl apply -f application/sockshop-demo-app.yaml
+```
+This will redeploy the application, using a manifest with a working backend database for the cart application.
+
+Wait for a while, and you'll start to see working orders.
 
 And that's the end of the final breakout!

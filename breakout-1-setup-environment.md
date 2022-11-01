@@ -47,17 +47,11 @@ B. On the login screen, use the same username password that you did for the web 
 
 **The first time you log in it might take a few seconds**
 
-## III. Deploy the sample application
+## III. Ensure the Sample Application is running
 
 For the rest of the workshop, we will be using [Weaveworks Sockshop](https://microservices-demo.github.io/).
 
-A. From your home directory in the web terminal, deploy the sockshop applications:
-
-```shell
-kubectl apply -f application/sockshop-demo-app.yaml
-```
-
-B. Open up k9s in the web terminal to see the progress of the application deploying.
+A. Open up k9s in the web terminal to see the progress of the application deploying.
 
 ```shell
 k9s
@@ -69,7 +63,7 @@ Validate that all of the pods are ready.
 
 You can exit the k9s application by using `Ctrl-C` or typing `:quit<Enter>`.
 
-D. When everything is up, you should be able to reach the application via an https url that was created already. Your URL is:
+B. When everything is up, you should be able to reach the application via an https url that was created already. Your URL is:
 
 ```
 https://<my-login-name>.work-shop.grafana.net
