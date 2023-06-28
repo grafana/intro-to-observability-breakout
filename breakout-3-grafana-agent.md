@@ -185,11 +185,11 @@ C. In the _Import via grafana.com_ box, enter `15642` and then click the _Load_ 
 
 ![import2](images/image31.png)
 
-C. At the bottom, choose your logs and metrics data sources from your Grafana Cloud stack, and click the _Import_ button.
+D. At the bottom, choose your logs and metrics data sources from your Grafana Cloud stack, and click the _Import_ button.
 
 ![import3](images/image32.png)
 
-D. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
+E. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
 
 ![import4](images/image33.png)
 
