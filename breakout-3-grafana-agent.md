@@ -17,7 +17,7 @@ B. Deploy the metrics agent:
 kubectl apply -f metrics/metrics-agent-deploy.yaml
 ```
 
-C. View that the agent is starting in k9s. If you do not see namespaces other than `default`, click on `0` to view all kubernetes namespaces. You might note that the Grafana Agent pod fails to start, that's OK, we're expecting it!
+C. View that the agent is starting in k9s. If you do not see namespaces other than `default`, type `0` (zero) to view all kubernetes namespaces. You might note that the Grafana Agent pod fails to start, that's OK, we're expecting it!
 
 ```shell
 k9s
@@ -28,9 +28,9 @@ D. Open `metrics/metrics-agent-cm.yaml` with `nano` or `vi` or `more`. Before th
 
 | Line no | Cloud Setting | ConfigMap Setting |
 |--|--|--|
-|18|Remote Write Endpoint|configs[agent]>remote_write>url|
-|20|Username/InstanceID|configs[agent]>remote_write>basic_auth>username|
-|21|Password/API Key|configs[agent]>remote_write>basic_auth>password|
+|19|Remote Write Endpoint|configs[agent]>remote_write>url|
+|21|Username/InstanceID|configs[agent]>remote_write>basic_auth>username|
+|22|Password/API Key|configs[agent]>remote_write>basic_auth>password|
 
 Do not edit the file. Just review it.
 
@@ -45,7 +45,7 @@ F. Restart the agent so that it picks up the config map settings and starts the 
 kubectl rollout restart deployments/grafana-metrics-agent -n grafana-metrics-ns
 ```
 
-G. Now we need to verify that the data is arriving in Grafana Cloud. From your home Grafana Cloud page, click on the explore icon on the left hand side:
+G. Now we need to verify that the data is arriving in Grafana Cloud. From your home Grafana Cloud page, click the menu button (☰) at the top left and choose _Explore_:
 
 ![explore](images/image17.png)
 
@@ -53,7 +53,7 @@ H. In the explore window, choose the prom data source for your cloud account. It
 
 ![prom-explore](images/image18.png)
 
-I. Click on metrics browser to make sure you see that the instance has been populated with your labels. The sockshop app has a label `app=sockshop`, and you can select all metrics with that app and value by using the 'Labels' section in the new Grafana PromQL Builder (the now default way of querying metrics). Then select 'Run query' at the top right of the page. If you see this label and metrics returned, this means that the metrics are arriving successfully. If you do not see this label, either ask the instructor, or use k9s to look at the logs for `grafana-metrics-agent`.
+I. Click on the _Code_ view button, and then the _Metrics browser_. Let's make sure that your Prometheus instance has been populated with metrics and labels. The sockshop app has a label `app=sockshop`, so click on the _app_ label and the _sockshop_ value. You can see all metrics with that app and value in the list on the left. Click on 'Use query' at the bottom. If you see this label and a list of metrics, this means that the metrics are arriving successfully. If you do not see this label, either ask the instructor, or use k9s to look at the logs for `grafana-metrics-agent`.
 
 ![sockshop](images/image19.png)
 
@@ -91,9 +91,9 @@ E. Restart the logs agent to pick up the values in the ConfigMap.
 kubectl rollout restart daemonset/grafana-logs-agent -n grafana-logs-ns
 ```
 
-F. Log into your Grafana dashboard instance and go to `Explore`. Choose the data source similarly named to that of the Prometheus one, but suffixed with `-logs`. You should see several labels appear in the logs browser. If you only see `__name__`, try refreshing after a few minutes. If it is still just the `__name__` label, you will need to troubleshoot your deployment. Use k9s to view logs or speak to your instructor.
+F. Log into your Grafana dashboard instance and go to `Explore`. Choose the data source similarly named to that of the Prometheus one, but suffixed with `-logs`. Ensure that the _Builder_ view is selected, using the button at the top right. You should see several labels appear in the logs browser. If you only see `__name__`, try refreshing after a few minutes. If it is still just the `__name__` label, you will need to troubleshoot your deployment. Use k9s to view logs or speak to your instructor.
 
-G. Make sure that you see a label `app=sockshop` and `Show Logs` to make sure you are seeing logs. If you see errors in the logs saying that no host could be found for grafana-traces-agent, that's ok. We will fix that next.
+G. Make sure that you see a label `app` and a value of `sockshop` and click _Run query_ (the blu) to make sure you are seeing logs. If you see errors in the logs saying that no host could be found for grafana-traces-agent, that's ok. We will fix that next.
 
 ![sockshop](images/image19-1.png)
 
@@ -157,15 +157,15 @@ kubectl apply -f application/load-test.yaml
 
 C. Wait for a few minutes, then open up your Grafana Cloud instance.
 
-D. Go to Explore, and choose your logs data source. In the `Log browser` drop down, choose `all-the-traces` under `job`. Click on `Show logs`. This will show you logs lines where traceIDs were recorded. (This was the point of the logs configuration in the traces agent ConfigMap).
+D. Go to Explore, and choose your logs data source. Ensure the Using the label drop-down boxes, choose the `job` label and the value `all-the-traces`. Click on the _Run query_ button (top right). This will show you logs lines where traceIDs were recorded. (This was the point of the logs configuration in the traces agent ConfigMap).
 
 ![traces](images/image27.png)
 
-E. Click into one of the logs lines with the `>` in the left hand margin.
+E. Click into one of the logs lines with the `>` in the left hand margin and click on the button next to the `traceID` field. This will open up the trace in the right hand panel.
 
 ![traceId](images/image28.png)
 
-F. You should see a button next to the `traceID` field. Click on this button to have the screen split and open up this trace in the right hand panel. Some of the more interesting traces are `GET /customers`.
+F. The trace will be opened up on the right side of the screen. Some of the more interesting traces are `GET /customers`.
 
 ![customer](images/image29.png)
 
@@ -175,31 +175,22 @@ G. If you click on `Logs for this span` and do not find logs, expand the range o
 
 Finally, we will import a simple dashboard to show some details of the `orders` pod.
 
-A. In the left hand menu, choose Create>Import
+A. Click the menu button (☰) and choose _Dashboards_.
+
+B. From the Dashboards menu, click on _New_ and then click on _Import_.
 
 ![import](images/image30.png)
 
-B. You are going to import a dashbaord numbered `15642`.
+C. In the _Import via grafana.com_ box, enter `15642` and then click the _Load_ button.
 
 ![import2](images/image31.png)
 
-C. At the bottom, choose the logs and metrics data sources for your stack.
+D. At the bottom, choose your logs and metrics data sources from your Grafana Cloud stack, and click the _Import_ button.
 
 ![import3](images/image32.png)
 
-D. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. You'll find there are errors, but no successful order.
+E. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
+
 ![import4](images/image33.png)
-
-## VI. Redeploy the Application
-
-Because there are errors, we're going to correct this and get some successful orders instead.
-
-In the webshell, run:
-```bash
-kubectl apply -f application/sockshop-demo-app.yaml
-```
-This will redeploy the application, using a manifest with a working backend database for the cart application.
-
-Wait for a while, and you'll start to see working orders.
 
 And that's the end of the final breakout!
