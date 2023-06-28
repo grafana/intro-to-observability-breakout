@@ -11,17 +11,15 @@ https://<my-login-name>.grafana.net
 
 And your password is the same as the password for the web terminal.
 
-B. In the left-hand menu, go to "Synthetic Monitoring > Home".
+B. Click the menu button (☰) at the top left, expand _Observability_ and click _Synthetics_.
 
 ![synth](images/image5.png)
 
 
-C. You will need to scroll down and click on the `Initialize the plugin` button to get started.
+C. When the Synthetics homepage opens, scroll down and click on the `Initialize the plugin` button to get started.
 
 
-D. After initialization, in the menu bar across the top, choose `Checks`
-
-![checks](images/image6.png)
+D. After initialization, from the menu bar at the left, choose _Synthetics &rarr; Checks_.
 
 E. The first check we will set up is a DNS check. Click on `New Check`
 
@@ -47,7 +45,7 @@ H. When you open the dashboard, you will see the default dashboard for DNS check
 
 ![dns_dashboard](images/image10.png)
 
-I. Following the process above, set up an HTTP check for the website, accepting defaults for anything you do not see. Note the `https://` at the front of the URL. (Your URL is `https://<my-login-name>.work-shop.grafana.net`):
+I. Repeating the same process above, set up an **HTTP** check for the website, accepting defaults for anything you do not see. Again, choose _All_ locations when specifying where your probe is located. Note when giving your application URL, you need to include the `https://` at the front of the URL. (Your URL is `https://<my-login-name>.work-shop.grafana.net`):
 
 ![http](images/image11.png)
 
@@ -58,6 +56,8 @@ K. Now we will scale down the front-end service that is serving the web pages. G
 ```shell
 kubectl scale deployment --replicas=0 front-end
 ```
+
+You may see a warning about `beta.kubernetes.io/os` being deprecated; this is OK.
 
 L. Verify that the front-end has no more instances running:
 
@@ -79,7 +79,7 @@ N. Scale the front-end back up to one replica via the Web Shell, and make sure t
 kubectl scale deployment --replicas=1 front-end
 ```
 
-O. Verify that the front-end is back up
+O. Verify that the front-end is back up - you should eventually see `1/1` in the READY column:
 
 ```shell
 $ kubectl get deployments
