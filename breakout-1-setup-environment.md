@@ -11,19 +11,19 @@ In this lab you will:
 A. Log into the web terminal. All files for the workshop have been put here and we will be using it as a place to run kubectl commands. This URL and the credentials will be given to you by your instructor. It will look something like:
 
 ```
-https://wetty-<workshopName>.work-shop.grafana.net
+https://<workshopName>.work-shop.grafana.net
 ```
 
-B. For this workshop, we are all working in our own Kubernetes clusters. At the root of your home directory, you will find a file called `kubeconfig`. Set an OS environment variable `KUBECONFIG` to point to this file. IMPORTANT: If you log out and log back in, you will need to repeast this step.
+B. For this workshop, you will be working in your own, individual Kubernetes cluster. In your home directory, you will find a file `$HOME/.kube/config` which has been pre-configured with the details of your own cluster. Try running this command to list the nodes in your cluster:
 
 ```shell
-export KUBECONFIG=$HOME/kubeconfig
+kubectl get nodes
 ```
 
-C. Validate that you can see the context in your list:
+If you see an error, then run this command to tell kubectl where your kubeconfig file is located, and try again:
 
 ```shell
-kubectl config get-contexts
+export KUBECONFIG=$HOME/.kube/config
 ```
 
 ## II. Validate that you can log in to Grafana
@@ -51,7 +51,17 @@ B. On the login screen, use the same username password that you did for the web 
 
 For the rest of the workshop, we will be using [Weaveworks Sockshop](https://microservices-demo.github.io/).
 
-A. Open up k9s in the web terminal to see the progress of the application deploying.
+**Note:** For some workshops, the sample application may have been deployed for you already. Your instructor will give you details.
+
+A. Go to your home directory in the web terminal (`cd ~`), then run the following command to deploy the sample application:
+
+```shell
+kubectl apply -n default -f application/sockshop-demo-app.yaml
+```
+
+The application may take up to 20 minutes to become available, while a new SSL certificate is issued by the cloud provider.
+
+B. To watch the progress of the application deployment, run k9s in the web terminal:
 
 ```shell
 k9s
@@ -59,11 +69,11 @@ k9s
 
 ![k9s console](images/image1.png)
 
-Validate that all of the pods are ready.
+You can inspect the status of the application's SSL certificate by typing `:managedcertificate` and pressing Enter.
 
 You can exit the k9s application by using `Ctrl-C` or typing `:quit<Enter>`.
 
-B. When everything is up, you should be able to reach the application via an https url that was created already. Your URL is:
+C. When everything is up, you should be able to reach the application via an HTTPS URL that has been created. Your URL is:
 
 ```
 https://<my-login-name>.work-shop.grafana.net
