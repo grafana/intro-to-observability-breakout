@@ -51,12 +51,12 @@ B. On the login screen, use the same username password that you did for the web 
 
 For the rest of the workshop, we will be using [Weaveworks Sockshop](https://microservices-demo.github.io/).
 
-**Note:** For some workshops, the sample application may have been already deployed for you. Check with your instructor for details.
+**Note:** For some workshops, the sample application may have been deployed for you already. Your instructor will give you details.
 
-A. From your home directory in the web terminal, run the following command to deploy the sample application:
+A. Go to your home directory in the web terminal (`cd ~`), then run the following command to deploy the sample application:
 
 ```shell
-kubectl apply -f application/sockshop-demo-app.yaml
+kubectl apply -n default -f application/sockshop-demo-app.yaml
 ```
 
 The application may take up to 20 minutes to become available, while a new SSL certificate is issued by the cloud provider.
